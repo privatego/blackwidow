@@ -1,17 +1,22 @@
 package extractor
 
-type extractor interface {
-	Fetch(url string) (body string, urls []string, err error)
-}
+import (
+	"fmt"
+	"github.com/opesun/goquery"
+	"model"
+)
 
-type HtmlExtractor struct {
-	body string
-	urls []string
-}
-
-func (h *HtmlExtractor) Extract(url string) (string, []string, error) {
-
-	if res, ok := (*h)[url]; ok {
-		return res.b
+func Extract(webEntity *model.WebEntity) {
+	if webEntity == nil || webEntity.Body == nil {
+		return
+	}
+	html := *webEntity.Body
+	nodes, err := goquery.ParseString(html)
+	if err != nil {
+		fmt.Println("goquery ParseString error : ", err)
+		panic(err)
+	} else {
+		title := nodes.Find("title").Text()
+		fmt.Println("title : ", title)
 	}
 }

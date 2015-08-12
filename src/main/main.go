@@ -4,6 +4,7 @@
 package main
 
 import (
+	"controller"
 	"fmt"
 	"utils"
 )
@@ -11,5 +12,5 @@ import (
 func main() {
 	fmt.Println("start run main ...")
 	utils.InitializeWidow()
-
+	controller.CrawlController()
 }

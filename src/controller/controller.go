@@ -1,23 +1,19 @@
 package controller
 
 import (
+	"download"
 	"extractor"
+	//"fmt"
+	"model"
+	"utils"
 )
 
 func CrawlController() {
 
-}
+	var crawlUrl model.CrawlURL = model.CrawlURL{}
+	crawlUrl.Url = utils.URL_SEED
+	webEntity := download.Download(&crawlUrl)
+	extractor.Extract(webEntity)
+	//fmt.Println("web content : ", *webEntity.Body)
 
-func Crawl(url string, depth int, extractor Extractor) {
-	if depth <= 0 {
-		return
-	}
-	body, urls, err := extractor.Extract(url)
-	if err != nil {
-		log.Println("fetch fail for url ", url)
-	}
-	for _, u := range urls {
-		Crawl(u, depth-1, fetcher)
-	}
-	return
 }
